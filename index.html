@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JEE Main 2026 Rank Predictor | Saksham Study Point</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>JEE Main 2026 Rank Predictor</h2>
+
+        <label>Applicant Number</label>
+        <input type="number" id="roll" placeholder="Enter your applicant number">
+
+        <label>Marks (out of 300)</label>
+        <input type="number" id="marks" placeholder="Enter marks">
+
+        <button onclick="predictRank()">Predict Rank</button>
+
+        <div class="result" id="resultBox">
+            <p><b>Roll No:</b> <span id="rRoll"></span></p>
+            <p><b>Marks:</b> <span id="rMarks"></span> / 300</p>
+            <p><b>Expected Percentile:</b> <span id="rPercentile"></span></p>
+            <p><b>Expected Rank:</b> <span id="rRank"></span></p>
+            <p><b>Possible Colleges:</b></p>
+            <ul id="rCollege"></ul>
+        </div>
+
+        <div class="note">
+            ⚠️ This is a prediction based on previous year trends. Actual result may vary.
+            <b> By submitting this form, you allow</b> the use of your roll number for future educational and
+            promotional activities of the
+            channel. <a href="rank-privacy.html">click here for more information</a>
+        </div>
+    </div>
+
+    <script>
+        function predictRank() {
+            let roll = document.getElementById("roll").value.trim();
+            let marks = parseInt(document.getElementById("marks").value);
+
+            if (roll === "" || isNaN(marks) || marks < 0 || marks > 300) {
+                alert("Please enter valid Roll Number and Marks (0–300)");
+                return;
+            }
+
+            let percentile = "";
+            let rank = "";
+            let colleges = [];
+
+            if (marks >= 250) {
+                percentile = "99.9+";
+                rank = "1 – 500";
+                colleges = ["Top NITs", "IIIT Hyderabad", "CSE / ECE branches"];
+            }
+            else if (marks >= 220) {
+                percentile = "99.5 – 99.8";
+                rank = "500 – 2,000";
+                colleges = ["Top NITs", "Top IIITs"];
+            }
+            else if (marks >= 180) {
+                percentile = "99.0 – 99.4";
+                rank = "2,000 – 6,000";
+                colleges = ["NIT (Good branches)", "IIIT"];
+            }
+            else if (marks >= 150) {
+                percentile = "97.0 – 98.9";
+                rank = "6,000 – 25,000";
+                colleges = ["NIT (Mid branches)", "IIIT", "GFTI"];
+            }
+            else if (marks >= 120) {
+                percentile = "94.0 – 96.9";
+                rank = "25,000 – 50,000";
+                colleges = ["GFTI", "State Govt Colleges"];
+            }
+            else if (marks >= 90) {
+                percentile = "90.0 – 93.9";
+                rank = "50,000 – 1,00,000";
+                colleges = ["State Colleges", "Private Colleges"];
+            }
+            else {
+                percentile = "Below 90";
+                rank = "1,00,000+";
+                colleges = ["Private Engineering Colleges"];
+            }
+
+            document.getElementById("rRoll").innerText = roll;
+            document.getElementById("rMarks").innerText = marks;
+            document.getElementById("rPercentile").innerText = percentile;
+            document.getElementById("rRank").innerText = rank;
+
+            let collegeList = document.getElementById("rCollege");
+            collegeList.innerHTML = "";
+            colleges.forEach(c => {
+                let li = document.createElement("li");
+                li.innerText = c;
+                collegeList.appendChild(li);
+            });
+
+            document.getElementById("resultBox").style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>
